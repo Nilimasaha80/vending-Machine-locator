@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sirona Store & Vending Locator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+    }
+    #sidebar {
+      width: 35%;
+      padding: 20px;
+      overflow-y: auto;
+      border-right: 1px solid #ccc;
+      max-height: 100vh;
+    }
+    #map {
+      width: 65%;
+      height: 100vh;
+    }
+    .location {
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .location h3 {
+      margin: 0 0 10px;
+    }
+    .icon {
+      margin-right: 5px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 8px 12px;
+      background-color: #00aaff;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="sidebar">
+  <h2>Sirona Locations</h2>
+  <div class="location">
+    <h3>DLF Avenue</h3>
+    <p><span class="icon">📍</span>129-B, Ground Floor, District Center, New Delhi, Delhi, 110017</p>
+    <p><span class="icon">⏰</span>11:00 AM - 11:00 PM</p>
+    <p><span class="icon">📞</span>011-4106-4902</p>
+    <p><span class="icon">✉️</span>del.dlfavenue@mamaearth.in</p>
+    <a class="btn" href="https://www.google.com/maps/search/?api=1&query=28.556,77.101" target="_blank">Get Directions</a>
+  </div>
+
+  <div class="location">
+    <h3>Paschim Vihar</h3>
+    <p><span class="icon">📍</span>DDA Build UP Free Hold, Shop Bearing No-02, Ground</p>
+    <!-- You can add timing/contact/email if known -->
+    <a class="btn" href="https://www.google.com/maps/search/?api=1&query=28.667,77.102" target="_blank">Get Directions</a>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+  var map = L.map('map').setView([28.6139, 77.2090], 11); // Centered at Delhi
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var locations = [
+    {
+      name: "DLF Avenue",
+      lat: 28.556,
+      lon: 77.101,
+      address: "129-B, Ground Floor, District Center, New Delhi",
+      type: "Store"
+    },
+    {
+      name: "Paschim Vihar",
+      lat: 28.667,
+      lon: 77.102,
+      address: "DDA Build UP Free Hold, Shop No-02, Ground",
+      type: "Store"
+    }
+  ];
+
+  locations.forEach(function(loc) {
+    var icon = loc.type === "Store" ? "🛍️" : "🤖";
+    L.marker([loc.lat, loc.lon])
+      .addTo(map)
+      .bindPopup(`<strong>${icon} ${loc.name}</strong><br>${loc.address}`);
+  });
+</script>
+
+</body>
+</html>
