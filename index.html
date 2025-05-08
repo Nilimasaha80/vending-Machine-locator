@@ -4,88 +4,127 @@
   <title>Sirona Vending Machine Locator</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Leaflet CSS -->
+  
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <!-- MarkerCluster CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
-
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; }
-    #map { height: 90vh; width: 100%; }
-    #search-box {
-      padding: 10px;
-      text-align: center;
-      background: #f4f4f4;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
     }
-    #search {
-      width: 300px;
-      padding: 8px;
-      font-size: 16px;
+    #container {
+      display: flex;
+      height: 100vh;
+    }
+    #sidebar {
+      width: 35%;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #fff;
+    }
+    #map {
+      flex-grow: 1;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .location {
+      margin-bottom: 30px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 15px;
+    }
+    .location h3 {
+      margin-bottom: 5px;
+    }
+    .location p {
+      margin: 4px 0;
+    }
+    .btn {
+      background-color: #00aaff;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 8px;
     }
   </style>
 </head>
 <body>
+  <div id="container">
+    <div id="sidebar">
+      <h2>Sirona Vending Machine Locations</h2>
 
-<h2 style="text-align:center; margin: 10px;">Sirona Vending Machine Locator</h2>
+      <div class="location">
+        <h3>Delhi Airport</h3>
+        <p>📍 New Udaan Bhawan, Opp. Terminal-3, Indira Gandhi International Airport, New Delhi-110037</p>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=28.5562,77.1000" target="_blank">Get Directions</a>
+      </div>
 
-<div id="search-box">
-  <input type="text" id="search" placeholder="Search locations by name..." />
-</div>
+      <div class="location">
+        <h3>Galgotia University</h3>
+        <p>📍 Plot No. 2, Yamuna Expressway, Greater Noida, Uttar Pradesh 203201</p>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=28.3170,77.5439" target="_blank">Get Directions</a>
+      </div>
 
-<div id="map"></div>
+      <div class="location">
+        <h3>Gurugram Sec 46</h3>
+        <p>📍 Aye Finance Pvt Ltd, Soulstice Building, Plot No-52, Sec-44, Gurugram, Haryana-122003</p>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=28.4500,77.0750" target="_blank">Get Directions</a>
+      </div>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<!-- MarkerCluster JS -->
-<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+      <div class="location">
+        <h3>Gurugram Sec 45</h3>
+        <p>📍 Unitech Commercial Tower 2, Sector 45, Gurugram, Haryana - 122003</p>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=28.4450,77.0800" target="_blank">Get Directions</a>
+      </div>
 
-<script>
-  const locations = [
-    { name: "Delhi Airport", address: "New Udaan Bhawan, Opp. Terminal-3, IGI Airport, New Delhi-110037", lat: 28.5562, lng: 77.1000 },
-    { name: "Bangalore Airport", address: "KIAL Road, Devanahalli, Bengaluru, Karnataka 560300", lat: 13.1986, lng: 77.7066 },
-    { name: "Galgotia University", address: "Plot No. 2, Yamuna Expwy, Greater Noida, UP 203201", lat: 28.3487, lng: 77.5520 },
-    { name: "Gurugram Sec 46", address: "Aye Finance, Soulstice Building, Plot No-52, Sec.-46, Gurgaon-122003", lat: 28.4265, lng: 77.0689 },
-    { name: "Gurugram Sec 45", address: "Aye Finance, Unitech Tower 2, Sector 45, Gurugram-122003", lat: 28.4242, lng: 77.0786 },
-    { name: "Yelahanka Sec B", address: "Aye Finance, Sector-B, Yelahanka New Town, Bangalore-560064", lat: 13.1007, lng: 77.5924 },
-    { name: "BITS Law School", address: "Murbad Rd, Kamba, Kalyan, Maharashtra 421301", lat: 19.2534, lng: 73.1636 },
-    { name: "Teez Hazari Court", address: "Bhiku Ram Jain Marg, Tis Hazari, New Delhi, Delhi 110054", lat: 28.6692, lng: 77.2301 },
-    { name: "Women Police Station ITANAGAR", address: "NH52A, C-Sector, Itanagar, Arunachal Pradesh 791111", lat: 27.0967, lng: 93.6122 }
-  ];
+      <div class="location">
+        <h3>Yelahanka, Bangalore</h3>
+        <p>📍 Aye Finance, 2nd & 3rd Floors, 3rd B Cross, Sector-B, Yelahanka New Town, Bengaluru-560064</p>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=13.1000,77.5800" target="_blank">Get Directions</a>
+      </div>
 
-  const map = L.map('map').setView([22.9734, 78.6569], 5);
+      <div class="location">
+        <h3>BITS Law School, Mumbai</h3>
+        <p>📍 Murbad Rd, opposite Tabor Ashram, Kamba, Kalyan, Maharashtra 421301</p>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=19.3000,73.1500" target="_blank">Get Directions</a>
+      </div>
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
-  }).addTo(map);
+      <div class="location">
+        <h3>Tis Hazari Court, Delhi</h3>
+        <p>📍 District Courts Tis Hazari, Bhiku Ram Jain Marg - Rajpur Rd, Kamla Nehru Ridge, Civil Lines, Delhi, 110054</p>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=28.6675,77.2206" target="_blank">Get Directions</a>
+      </div>
 
-  const markers = L.markerClusterGroup();
-  const markerRefs = [];
+    </div>
 
-  locations.forEach(loc => {
-    const marker = L.marker([loc.lat, loc.lng])
-      .bindPopup(`<b>${loc.name}</b><br>${loc.address}`);
-    markers.addLayer(marker);
-    markerRefs.push({ name: loc.name.toLowerCase(), marker });
-  });
+    <div id="map"></div>
+  </div>
 
-  map.addLayer(markers);
+  <script>
+    var map = L.map('map').setView([28.6139, 77.2090], 10); // Centered on Delhi
 
-  // 🔍 Search Filter
-  document.getElementById('search').addEventListener('input', function () {
-    const query = this.value.toLowerCase();
-    markers.clearLayers();
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-    markerRefs.forEach(({ name, marker }) => {
-      if (name.includes(query)) {
-        markers.addLayer(marker);
-      }
+    const locations = [
+      { name: "Delhi Airport", coords: [28.5562, 77.1000] },
+      { name: "Galgotia University", coords: [28.3170, 77.5439] },
+      { name: "Gurugram Sec 46", coords: [28.4500, 77.0750] },
+      { name: "Gurugram Sec 45", coords: [28.4450, 77.0800] },
+      { name: "Yelahanka, Bangalore", coords: [13.1000, 77.5800] },
+      { name: "BITS Law School", coords: [19.3000, 73.1500] },
+      { name: "Tis Hazari Court", coords: [28.6675, 77.2206] }
+    ];
+
+    locations.forEach(loc => {
+      L.marker(loc.coords).addTo(map)
+        .bindPopup(`<b>${loc.name}</b>`);
     });
-
-    map.addLayer(markers);
-  });
-</script>
-
+  </script>
 </body>
 </html>
+
