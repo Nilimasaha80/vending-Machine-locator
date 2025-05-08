@@ -1,191 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Sirona Vending Machine Locator</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIRONA Vending Machine Locator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
       display: flex;
-      flex-direction: row;
     }
-    #sidebar {
-      width: 35%;
+    .sidebar {
+      width: 40%;
       padding: 20px;
+      background-color: #f9f9f9;
       overflow-y: auto;
-      border-right: 1px solid #ccc;
-      max-height: 100vh;
-    }
-    #map {
-      width: 65%;
       height: 100vh;
     }
-    .location {
-      margin-bottom: 30px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #e0e0e0;
+    .map {
+      width: 60%;
+      height: 100vh;
     }
-    .location h3 {
-      margin: 0 0 10px;
+    h2 {
+      color: #e91e63;
+    }
+    .location {
+      margin-bottom: 20px;
+    }
+    .location p {
+      margin: 5px 0;
     }
     .icon {
-      margin-right: 5px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 8px 12px;
-      background-color: #00aaff;
-      color: white;
-      text-decoration: none;
-      border-radius: 4px;
-      margin-top: 10px;
+      margin-right: 8px;
+      color: #e91e63;
     }
   </style>
 </head>
 <body>
-
-<div id="sidebar">
-  <h2>Sirona Vending Machine Locations</h2>
-  <div class="location-list">
-  <div class="location">
-    <h3>Delhi Airport</h3>
-    <p><strong>State:</strong> Delhi</p>
-    <p>New Udaan Bhawan, Opp. Terminal-3, Indira Gandhi International Airport, New Delhi-110037</p>
+  <div class="sidebar">
+    <h2>SIRONA Vending Machine Locations</h2>
+    <div class="location">
+      <h3>Delhi Airport</h3>
+      <p><strong>Address:</strong> New Udaan Bhawan, Opp. Terminal-3, Indira Gandhi International Airport, New Delhi - 110037</p>
+    </div>
+    <div class="location">
+      <h3>Bangalore Airport</h3>
+      <p><strong>Address:</strong> KIAL Road, Devanahalli, Bengaluru, Karnataka 560300</p>
+    </div>
+    <div class="location">
+      <h3>Galgotia University</h3>
+      <p><strong>Address:</strong> Plot No. 2, Yamuna Expressway, Opposite Buddha International Circuit, Sector 17A, Greater Noida, Uttar Pradesh 203201</p>
+    </div>
+    <div class="location">
+      <h3>Gurugram Sec 46</h3>
+      <p><strong>Address:</strong> Aye Finance Pvt Ltd, 2nd Floor, Soulstice Building, Plot No-52, Sec.-46, Gurgaon, Haryana 122003</p>
+    </div>
+    <div class="location">
+      <h3>Gurugram Sec 45</h3>
+      <p><strong>Address:</strong> Aye Finance Pvt Ltd, 7th Floor, Unitech Commercial Tower 2, Sector 45, Gurugram, Haryana 122003</p>
+    </div>
+    <div class="location">
+      <h3>Yelahanka Sec B</h3>
+      <p><strong>Address:</strong> Aye Finance Pvt Ltd, No-2023, 2nd & 3rd Floors, 3rd B Cross, Sector-B, Yelahanka New Town, Bangalore 560064</p>
+    </div>
+    <div class="location">
+      <h3>BITS Law School</h3>
+      <p><strong>Address:</strong> BITS Law School, Murbad Rd, Opposite Tabor Ashram, Kamba, Kalyan, Maharashtra 421301</p>
+    </div>
+    <div class="location">
+      <h3>Teez Hazari Court</h3>
+      <p><strong>Address:</strong> District Courts Tis Hazari, Bhiku Ram Jain Marg - Rajpur Rd, Block BGS, Kamla Nehru Ridge, Civil Lines, New Delhi, Delhi 110054</p>
+    </div>
+    <div class="location">
+      <h3>Women Police Station ITANAGAR</h3>
+      <p><strong>Address:</strong> 3JXG+PMP, NH52A, Itanagar Rd, C- Sector, Itanagar, Arunachal Pradesh 791111</p>
+    </div>
   </div>
-  <div class="location">
-    <h3>Bangalore Airport</h3>
-    <p><strong>State:</strong> Bangalore</p>
-    <p>KIAL Road, Devanahalli, Bengaluru, Karnataka 560300</p>
-  </div>
-  <div class="location">
-    <h3>Galgotia University</h3>
-    <p><strong>State:</strong> Uttar Pradesh</p>
-    <p>Plot No. 2, Yamuna Expy, opposite Buddha International Circuit, Sector 17A, Greater Noida, Uttar Pradesh 203201</p>
-  </div>
-  <div class="location">
-    <h3>Aye Finance – Gurugram Sec 46</h3>
-    <p><strong>State:</strong> Haryana</p>
-    <p>Aye Finance Pvt Ltd, 2nd Floor, Soulstice Building, Plot No-52, Sec.-44, Gurgaon, Haryana-122003</p>
-  </div>
-  <div class="location">
-    <h3>Aye Finance – Gurugram Sec 45</h3>
-    <p><strong>State:</strong> Haryana</p>
-    <p>Aye Finance Pvt Ltd, 7th Floor, Unitech Commercial Tower 2, Sector 45, Gurugram, Haryana - 122003</p>
-  </div>
-  <div class="location">
-    <h3>Aye Finance – Yelahanka Sec B</h3>
-    <p><strong>State:</strong> Bangalore</p>
-    <p>Aye Finance Pvt Ltd, No-2023, 2nd & 3rd Floors, 3rd B Cross, Sector-8, Yelahanka New Town, Bangalore-560064</p>
-  </div>
-  <div class="location">
-    <h3>BITS Law School</h3>
-    <p><strong>State:</strong> Maharashtra</p>
-    <p>BITS Law School, Murbad Rd, opposite tabor ashram, Kamba, Kalyan, Maharashtra 421301</p>
-  </div>
-  <div class="location">
-    <h3>Teez Hazari Court</h3>
-    <p><strong>State:</strong> Delhi</p>
-    <p>District Courts Tis Hazari, Bhiku Ram Jain Marg - Rajpur Rd, Block BGS, Kamla Nehru Ridge, Civil Lines, New Delhi, Delhi, 110054</p>
-  </div>
-  <div class="location">
-    <h3>Women Police Station ITANAGAR</h3>
-    <p><strong>State:</strong> Arunachal Pradesh</p>
-    <p>3JXG+PMP, NH52A, Itanagar Rd, C- Sector, Itanagar, Arunachal Pradesh 791111</p>
-  </div>
-</div>
+  <div class="map" id="map"></div>
 
+  <script>
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 5,
+        center: { lat: 22.5937, lng: 78.9629 },
+      });
 
-</div>
+      const locations = [
+        { title: "Delhi Airport", lat: 28.5562, lng: 77.1000 },
+        { title: "Bangalore Airport", lat: 13.1986, lng: 77.7066 },
+        { title: "Galgotia University", lat: 28.3822, lng: 77.5190 },
+        { title: "Gurugram Sec 46", lat: 28.4292, lng: 77.0689 },
+        { title: "Gurugram Sec 45", lat: 28.4232, lng: 77.0731 },
+        { title: "Yelahanka Sec B", lat: 13.1045, lng: 77.5867 },
+        { title: "BITS Law School", lat: 19.2638, lng: 73.1655 },
+        { title: "Teez Hazari Court", lat: 28.6667, lng: 77.2167 },
+        { title: "Women Police Station ITANAGAR", lat: 27.0844, lng: 93.6053 },
+      ];
 
-<div id="map"></div>
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script>
-  var map = L.map('map').setView([28.6139, 77.2090], 11); // Centered at Delhi
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  var locations = [
-    {var locations = [
-  {
-    name: "Delhi Airport",
-    lat: 28.5562,
-    lon: 77.1000,
-    address: "New Udaan Bhawan, Opp. Terminal-3, IGI Airport, New Delhi-110037",
-    type: "Vending Machine"
-  },
-  {
-    name: "Bangalore Airport",
-    lat: 13.1986,
-    lon: 77.7066,
-    address: "KIAL Road, Devanahalli, Bengaluru, Karnataka 560300",
-    type: "Vending Machine"
-  },
-  {
-    name: "Galgotia University",
-    lat: 28.4499,
-    lon: 77.5806,
-    address: "Plot No. 2, Yamuna Expy, Opp. Buddha Circuit, Sector 17A, Greater Noida, UP 203201",
-    type: "Vending Machine"
-  },
-  {
-    name: "Gurugram Sec 46",
-    lat: 28.4380,
-    lon: 77.0724,
-    address: "Aye Finance, 2nd Floor, Soulstice Building, Plot No-52, Sec-44, Gurugram, Haryana-122003",
-    type: "Vending Machine"
-  },
-  {
-    name: "Gurugram Sec 45",
-    lat: 28.4294,
-    lon: 77.0776,
-    address: "Aye Finance, 7th Floor, Unitech Tower 2, Sector 45, Gurugram, Haryana - 122003",
-    type: "Vending Machine"
-  },
-  {
-    name: "Yelahanka Sec B",
-    lat: 13.1022,
-    lon: 77.5771,
-    address: "Aye Finance, No-2023, 2nd & 3rd Floors, 3rd B Cross, Sector-8, Yelahanka, Bangalore-560064",
-    type: "Vending Machine"
-  },
-  {
-    name: "BITS Law School",
-    lat: 19.2526,
-    lon: 73.1322,
-    address: "BITS Law School, Murbad Rd, Opp. Tabor Ashram, Kamba, Kalyan, Maharashtra 421301",
-    type: "Vending Machine"
-  },
-  {
-    name: "Teez Hazari Court",
-    lat: 28.6687,
-    lon: 77.2244,
-    address: "District Courts Tis Hazari, Bhiku Ram Jain Marg, Civil Lines, New Delhi, 110054",
-    type: "Vending Machine"
-  },
-  {
-    name: "Women Police Station ITANAGAR",
-    lat: 27.0993,
-    lon: 93.6125,
-    address: "3JXG+PMP, NH52A, C-Sector, Itanagar, Arunachal Pradesh 791111",
-    type: "Vending Machine"
-  }
-];
-
-  locations.forEach(function(loc) {
-    var icon = loc.type === "Store" ? "🛍️" : "🤖";
-    L.marker([loc.lat, loc.lon])
-      .addTo(map)
-      .bindPopup(`<strong>${icon} ${loc.name}</strong><br>${loc.address}`);
-  });
-</script>
-
+      locations.forEach((loc) => {
+        new google.maps.Marker({
+          position: { lat: loc.lat, lng: loc.lng },
+          map,
+          title: loc.title,
+        });
+      });
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 </body>
 </html>
